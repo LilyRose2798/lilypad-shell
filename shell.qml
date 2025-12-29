@@ -35,15 +35,16 @@ ShellRoot {
         left: true
         right: true
       }
-      implicitHeight: 32
-      color: "#202035"
+      implicitHeight: Style.barHeight
+      color: Style.barBgColor
 
       Item {
         anchors.fill: parent
-        anchors.margins: 10
+        anchors.leftMargin: Style.barHorizontalMargin
+        anchors.rightMargin: Style.barHorizontalMargin
 
         RowLayout {
-          spacing: 10
+          spacing: Style.barSpacing
           anchors.left: parent.left
           anchors.verticalCenter: parent.verticalCenter
 
@@ -54,7 +55,7 @@ ShellRoot {
         }
 
         RowLayout {
-          spacing: 10
+          spacing: Style.barSpacing
           anchors.horizontalCenter: parent.horizontalCenter
           anchors.verticalCenter: parent.verticalCenter
 
@@ -64,14 +65,15 @@ ShellRoot {
         }
 
         RowLayout {
-          spacing: 10
+          spacing: Style.barSpacing
           anchors.right: parent.right
           anchors.verticalCenter: parent.verticalCenter
 
-          Text {
-            color: "#ffffff"
-            font.family: "monospace"
-            text: "Bar Right"
+          Pill {
+            CommandPillText {
+              icon: "󰃭"
+              command: ["date"]
+            }
           }
         }
       }
