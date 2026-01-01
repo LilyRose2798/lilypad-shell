@@ -184,7 +184,6 @@ PopupWindow {
                 hoverEnabled: true
                 onClicked: {
                   entry.modelData.triggered()
-                  console.log(entry.modelData.checkState)
                   if (entry.modelData.hasChildren) {
                     root.parentEntries = [root.entries, ...root.parentEntries]
                     root.entries = menuOpener.children
