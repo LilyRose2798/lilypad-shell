@@ -4,8 +4,7 @@ import qs.common
 
 Singleton {
   function _formatMessage(...args) {
-    const message = args.length > 1 ? `\x1b[35m${Util.pad(args[0], 14)}\x1b[0m ${args.slice(1).join(" ")}` : args.join(
-                                        " ")
+    const message = args.length > 1 ? `\x1b[35m${Util.pad(args[0], 14)}\x1b[0m ${args.slice(1).join(" ")}` : args.join(" ")
     return `\x1b[36m[${Time.nowDateTimeString()}]\x1b[0m ${message}`
   }
 

@@ -28,14 +28,11 @@ ${toplevels.map(w => w.lastIpcObject).filter(w => w !== null).map(w => `${w.titl
       txt.active: modelData.active || modelData.toplevels.values.length > 0
       onLeftClick: {
         if (Hyprland.focusedWorkspace !== modelData)
-        modelData.activate()
+          modelData.activate()
       }
       clickable: true
       horizontalMargin: modelData === Hyprland.focusedWorkspace ? 20 : 10
-      rect.color: modelData.urgent ? Style.workspacesUrgentColor : modelData === Hyprland.focusedWorkspace ? Style.workspacesFocusedColor :
-                                                                                                             modelData.active
-                                                                                                             ? Style.workspacesActiveColor :
-                                                                                                               Style.transparent
+      rect.color: modelData.urgent ? Style.workspacesUrgentColor : modelData === Hyprland.focusedWorkspace ? Style.workspacesFocusedColor : modelData.active ? Style.workspacesActiveColor : Style.transparent
 
       Behavior on horizontalMargin {
         NumberAnimation {

@@ -67,9 +67,7 @@ Item {
         id: txt
         visible: !!root.icon || !!root.text
         mono: root.mono
-        text: Util.flattenString([root.icon, root.text === "" ? "" : `${root.prefix}${root.text}${root.suffix}`].filter(x
-                                                                                                                        => x !== "").join(
-                                   " "))
+        text: Util.flattenString([root.icon, root.text === "" ? "" : `${root.prefix}${root.text}${root.suffix}`].filter(x => x !== "").join(" "))
         font.pointSize: Style.pillFontSize
       }
     }
@@ -82,41 +80,41 @@ Item {
     onClicked: mouse => {
       root.click(mouse)
       if (mouse.button === Qt.LeftButton)
-      root.leftClick(mouse)
+        root.leftClick(mouse)
       else if (mouse.button === Qt.RightButton)
-      root.rightClick(mouse)
+        root.rightClick(mouse)
       else if (mouse.button === Qt.MiddleButton)
-      root.middleClick(mouse)
+        root.middleClick(mouse)
     }
     onDoubleClicked: mouse => {
       root.doubleClick(mouse)
       if (mouse.button === Qt.LeftButton)
-      root.leftDoubleClick(mouse)
+        root.leftDoubleClick(mouse)
       else if (mouse.button === Qt.RightButton)
-      root.rightDoubleClick(mouse)
+        root.rightDoubleClick(mouse)
       else if (mouse.button === Qt.MiddleButton)
-      root.middleDoubleClick(mouse)
+        root.middleDoubleClick(mouse)
     }
     onWheel: wheel => {
       root.wheel(wheel)
       if (wheel.angleDelta.y > 0)
-      root.wheelUp(wheel)
+        root.wheelUp(wheel)
       else if (wheel.angleDelta.y < 0)
-      root.wheelDown(wheel)
+        root.wheelDown(wheel)
       if (wheel.angleDelta.x > 0)
-      root.wheelRight(wheel)
+        root.wheelRight(wheel)
       else if (wheel.angleDelta.x < 0)
-      root.wheelLeft(wheel)
+        root.wheelLeft(wheel)
     }
     hoverEnabled: root.tooltip !== ""
     onEntered: {
       if (!hoverEnabled)
-      return
+        return
       hover.start()
     }
     onExited: {
       if (!hoverEnabled)
-      return
+        return
       hover.stop()
       tooltipLoader.active = false
     }
@@ -129,7 +127,7 @@ Item {
     interval: root.tooltipDelay
     onTriggered: {
       if (!mouse.hoverEnabled)
-      return
+        return
       tooltipLoader.active = true
     }
   }

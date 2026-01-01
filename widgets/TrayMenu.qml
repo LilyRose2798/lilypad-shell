@@ -24,7 +24,7 @@ PopupWindow {
 
   Component.onCompleted: {
     if (this.WlrLayershell != null)
-    this.WlrLayershell.keyboardFocus = WlrKeyboardFocus.OnDemand
+      this.WlrLayershell.keyboardFocus = WlrKeyboardFocus.OnDemand
   }
 
   WrapperRectangle {
@@ -121,13 +121,10 @@ PopupWindow {
               LText {
                 mono: root.mono
                 text: entry.modelData.text ?? ""
-                color: entry.modelData.enabled ? Style.textPrimaryColor : entry.index === 0 ? Style.trayTitleColor :
-                                                                                              Style.textInactiveColor
+                color: entry.modelData.enabled ? Style.textPrimaryColor : entry.index === 0 ? Style.trayTitleColor : Style.textInactiveColor
                 anchors.fill: textRect
                 anchors.leftMargin: Style.menuHorizontalMargin
-                anchors.rightMargin: iconLoader.implicitWidth === 0 ? Style.menuHorizontalMargin : 2
-                                                                      * Style.menuHorizontalMargin
-                                                                      + iconLoader.implicitWidth
+                anchors.rightMargin: iconLoader.implicitWidth === 0 ? Style.menuHorizontalMargin : 2 * Style.menuHorizontalMargin + iconLoader.implicitWidth
                 verticalAlignment: Text.AlignVCenter
               }
 
@@ -152,12 +149,10 @@ PopupWindow {
 
                   LText {
                     icon: entry.modelData.hasChildren ? "󰅂" : {
-                                                          [QsMenuButtonType.None]: "",
-                                                          [QsMenuButtonType.CheckBox]: entry.modelData.checkState
-                                                                                       === Qt.Unchecked ? "󰄱" : "󰄲",
-                                                          [QsMenuButtonType.RadioButton]: entry.modelData.checkState
-                                                                                          === Qt.Unchecked ? "󰄰" : "󰐾"
-                                                        }[entry.modelData.buttonType]
+                      [QsMenuButtonType.None]: "",
+                      [QsMenuButtonType.CheckBox]: entry.modelData.checkState === Qt.Unchecked ? "󰄱" : "󰄲",
+                      [QsMenuButtonType.RadioButton]: entry.modelData.checkState === Qt.Unchecked ? "󰄰" : "󰐾"
+                    }[entry.modelData.buttonType]
                   }
                 }
               }
@@ -188,12 +183,12 @@ PopupWindow {
                     root.parentEntries = [root.entries, ...root.parentEntries]
                     root.entries = menuOpener.children
                   } else
-                  root.closed()
+                    root.closed()
                 }
                 onEntered: {
                   textRect.color = Style.menuHoverBgColor
                   if (entry.modelData.hasChildren)
-                  hoverTimer.start()
+                    hoverTimer.start()
                 }
                 onExited: {
                   textRect.color = Style.transparent

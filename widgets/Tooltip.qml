@@ -21,7 +21,7 @@ PopupWindow {
 
   Component.onCompleted: {
     if (this.WlrLayershell != null)
-    this.WlrLayershell.keyboardFocus = WlrKeyboardFocus.OnDemand
+      this.WlrLayershell.keyboardFocus = WlrKeyboardFocus.OnDemand
   }
 
   WrapperRectangle {

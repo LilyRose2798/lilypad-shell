@@ -16,8 +16,7 @@ Pill {
   Repeater {
     model: ScriptModel {
       objectProp: "id"
-      values: SystemTray.items.values.filter(i => i !== null).sort((a, b) => a.tooltipTitle.localeCompare(
-                                                                     b.tooltipTitle))
+      values: SystemTray.items.values.filter(i => i !== null).sort((a, b) => a.tooltipTitle.localeCompare(b.tooltipTitle))
     }
     delegate: Pill {
       id: item
@@ -33,9 +32,9 @@ Pill {
       onMiddleClick: modelData.secondaryActivate()
       onWheel: wheel => {
         if (wheel.angleDelta.x !== 0)
-        modelData.scroll(wheel.angleDelta.x, true)
+          modelData.scroll(wheel.angleDelta.x, true)
         else if (wheel.angleDelta.y !== 0)
-        modelData.scroll(wheel.angleDelta.y, false)
+          modelData.scroll(wheel.angleDelta.y, false)
       }
 
       IconImage {
