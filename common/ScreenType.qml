@@ -22,7 +22,7 @@ Singleton {
 
   function isOnTop(screenType: int): bool {
     return {
-      [ScreenType.Laptop]: true,
+      [ScreenType.Laptop]: false,
       [ScreenType.Primary]: false,
       [ScreenType.Secondary]: true,
       [ScreenType.Tertiary]: true,
