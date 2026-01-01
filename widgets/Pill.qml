@@ -1,11 +1,14 @@
 pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
+import Quickshell
 import Quickshell.Widgets
 import qs.common
 
 Item {
   id: root
+  required property ShellScreen screen
+  readonly property bool isOnTop: ScreenType.isOnTop(ScreenType.get(screen))
   default property alias data: row.data
   property alias rect: rect
   property alias row: row
@@ -23,6 +26,7 @@ Item {
   property string prefix: ""
   property string suffix: ""
   property string tooltip: ""
+  property double tooltipDelay: Style.tooltipDelay
   property bool mono: true
   property bool monoTooltip: false
   signal click(MouseEvent mouse)
@@ -67,8 +71,6 @@ Item {
                                                                                                                         => x !== "").join(
                                    " "))
         font.pointSize: Style.pillFontSize
-        maximumLineCount: 1
-        wrapMode: Text.NoWrap
       }
     }
   }
@@ -115,7 +117,6 @@ Item {
     onExited: {
       if (!hoverEnabled)
       return
-      hover.restart()
       hover.stop()
       tooltipLoader.active = false
     }
@@ -125,7 +126,7 @@ Item {
 
   Timer {
     id: hover
-    interval: Style.tooltipDelay
+    interval: root.tooltipDelay
     onTriggered: {
       if (!mouse.hoverEnabled)
       return
@@ -133,13 +134,14 @@ Item {
     }
   }
 
-  Loader {
+  LazyLoader {
     id: tooltipLoader
-    active: false
-    visible: active
-    sourceComponent: Tooltip {
+
+    Tooltip {
+      id: tooltip
       target: root
       tooltip: root.tooltip
+      above: !root.isOnTop
       mono: root.monoTooltip
     }
   }

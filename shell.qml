@@ -1,8 +1,8 @@
-//@ pragma UseQApplication
 pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import Quickshell.Hyprland
 import Quickshell.Services.Mpris
 import Quickshell.Services.Pipewire
 import Quickshell.Services.UPower
@@ -26,6 +26,13 @@ ShellRoot {
     }
   }
 
+  Connections {
+    target: Hyprland
+    function onRawEvent(event) {
+      Hyprland.refreshToplevels()
+    }
+  }
+
   Variants {
     model: Quickshell.screens
     delegate: PanelWindow {
@@ -42,7 +49,12 @@ ShellRoot {
       }
       implicitHeight: Style.barHeight
       color: Style.barBgColor
-      WlrLayershell.layer: WlrLayer.Bottom
+      aboveWindows: false
+
+      Component.onCompleted: {
+        if (this.WlrLayershell != null)
+        this.WlrLayershell.keyboardFocus = WlrKeyboardFocus.OnDemand
+      }
 
       Item {
         anchors.fill: parent
@@ -56,14 +68,18 @@ ShellRoot {
 
           Loader {
             active: bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary
-            sourceComponent: Clock {}
+            sourceComponent: Clock {
+              screen: bar.screen
+            }
           }
 
           Loader {
             active: Mpris.players.values.length > 0 && bar.screenType === ScreenType.Laptop || bar.screenType
                     === ScreenType.Primary
 
-            sourceComponent: Mpris {}
+            sourceComponent: Mpris {
+              screen: bar.screen
+            }
           }
         }
 
@@ -93,12 +109,15 @@ ShellRoot {
             spacing: 0
             horizontalMargin: 0
             clickable: false
+            screen: bar.screen
 
             Loader {
               id: battery
               active: UPower.devices.values.find(d => d.isLaptopBattery) !== null && bar.screenType
                       === ScreenType.Laptop
-              sourceComponent: Battery {}
+              sourceComponent: Battery {
+                screen: bar.screen
+              }
             }
 
             Divider {
@@ -110,7 +129,9 @@ ShellRoot {
               id: audio
               active: Pipewire.defaultAudioSink !== null && bar.screenType === ScreenType.Laptop || bar.screenType
                       === ScreenType.Primary
-              sourceComponent: Audio {}
+              sourceComponent: Audio {
+                screen: bar.screen
+              }
             }
 
             Divider {
@@ -121,7 +142,9 @@ ShellRoot {
             Loader {
               id: bluetooth
               active: bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary
-              sourceComponent: Bluetooth {}
+              sourceComponent: Bluetooth {
+                screen: bar.screen
+              }
             }
 
             Divider {
@@ -131,7 +154,9 @@ ShellRoot {
 
             Loader {
               active: bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary
-              sourceComponent: Network {}
+              sourceComponent: Network {
+                screen: bar.screen
+              }
             }
           }
         }
