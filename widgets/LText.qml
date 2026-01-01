@@ -5,8 +5,9 @@ Text {
   property bool active: true
   property string icon
   property string value: ""
+  property bool mono: false
   color: active ? Style.textPrimaryColor : Style.textInactiveColor
-  font.family: Style.fontFamily
+  font.family: mono ? Style.monospaceFont : Style.sansSerifFont
   font.pointSize: Style.fontSize
   text: icon ? `${icon} ${value}` : value
 }

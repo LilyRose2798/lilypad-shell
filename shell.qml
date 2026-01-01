@@ -1,7 +1,12 @@
+//@ pragma UseQApplication
 pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import Quickshell.Services.Mpris
+import Quickshell.Services.Pipewire
+import Quickshell.Services.UPower
+import Quickshell.Wayland
 import qs.common
 import qs.widgets
 
@@ -28,7 +33,7 @@ ShellRoot {
       required property ShellScreen modelData
       screen: modelData
       readonly property int screenType: ScreenType.get(screen)
-      readonly property bool isOnTop: screenType === ScreenType.Secondary || screenType === ScreenType.Tertiary
+      readonly property bool isOnTop: ScreenType.isOnTop(screenType)
       anchors {
         top: isOnTop
         bottom: !isOnTop
@@ -37,6 +42,7 @@ ShellRoot {
       }
       implicitHeight: Style.barHeight
       color: Style.barBgColor
+      WlrLayershell.layer: WlrLayer.Bottom
 
       Item {
         anchors.fill: parent
@@ -51,6 +57,13 @@ ShellRoot {
           Loader {
             active: bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary
             sourceComponent: Clock {}
+          }
+
+          Loader {
+            active: Mpris.players.values.length > 0 && bar.screenType === ScreenType.Laptop || bar.screenType
+                    === ScreenType.Primary
+
+            sourceComponent: Mpris {}
           }
         }
 
@@ -69,10 +82,56 @@ ShellRoot {
           anchors.right: parent.right
           anchors.verticalCenter: parent.verticalCenter
 
+          Loader {
+            active: bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary
+            sourceComponent: Tray {
+              screen: bar.screen
+            }
+          }
+
           Pill {
-            CommandPillText {
-              icon: "󰃭"
-              command: ["date"]
+            spacing: 0
+            horizontalMargin: 0
+            clickable: false
+
+            Loader {
+              id: battery
+              active: UPower.devices.values.find(d => d.isLaptopBattery) !== null && bar.screenType
+                      === ScreenType.Laptop
+              sourceComponent: Battery {}
+            }
+
+            Divider {
+              visible: battery.active
+              vertical: true
+            }
+
+            Loader {
+              id: audio
+              active: Pipewire.defaultAudioSink !== null && bar.screenType === ScreenType.Laptop || bar.screenType
+                      === ScreenType.Primary
+              sourceComponent: Audio {}
+            }
+
+            Divider {
+              visible: audio.active
+              vertical: true
+            }
+
+            Loader {
+              id: bluetooth
+              active: bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary
+              sourceComponent: Bluetooth {}
+            }
+
+            Divider {
+              visible: bluetooth.active
+              vertical: true
+            }
+
+            Loader {
+              active: bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary
+              sourceComponent: Network {}
             }
           }
         }

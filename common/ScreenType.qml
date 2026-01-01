@@ -19,4 +19,14 @@ Singleton {
       "DP-3": ScreenType.Tertiary
     }[screen.name] ?? ScreenType.Unknown
   }
+
+  function isOnTop(screenType: int): bool {
+    return {
+      [ScreenType.Laptop]: true,
+      [ScreenType.Primary]: false,
+      [ScreenType.Secondary]: true,
+      [ScreenType.Tertiary]: true,
+      [ScreenType.Unknown]: false
+    }[screenType]
+  }
 }

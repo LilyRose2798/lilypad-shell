@@ -1,0 +1,4 @@
+Pill {
+  icon: "󰈀"
+  text: ""
+}
