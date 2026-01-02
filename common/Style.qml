@@ -34,9 +34,11 @@ Singleton {
   readonly property double menuHorizontalMargin: 8
   readonly property double menuVerticalMargin: 8
   readonly property double menuRadius: 10
-  readonly property double menuItemWidth: 250
-  readonly property double menuItemHeight: 30
+  readonly property double menuItemSpacing: 0
+  readonly property double menuItemHorizontalMargin: 8
+  readonly property double menuItemVerticalMargin: 8
   readonly property double menuItemRadius: 10
-  readonly property double menuSeparatorHeight: 10
+  readonly property double menuItemIconSpacing: 10
+  readonly property double menuSeparatorVerticalMargin: 3
   readonly property string menuHoverBgColor: "#22FFFFFF"
 }

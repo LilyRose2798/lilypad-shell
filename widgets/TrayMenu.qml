@@ -55,7 +55,7 @@ PopupWindow {
     radius: Style.menuRadius
 
     ColumnLayout {
-      spacing: 0
+      spacing: Style.menuItemSpacing
 
       Loader {
         sourceComponent: root.parentEntries.length > 0 ? backComponent : undefined
@@ -88,11 +88,14 @@ PopupWindow {
             WrapperRectangle {
               id: textRect
               color: Style.transparent
+              leftMargin: Style.menuItemHorizontalMargin
+              rightMargin: Style.menuItemHorizontalMargin
+              topMargin: Style.menuItemVerticalMargin
+              bottomMargin: Style.menuItemVerticalMargin
               radius: Style.menuItemRadius
-              margin: 8
 
               RowLayout {
-                spacing: 10
+                spacing: Style.menuItemIconSpacing
 
                 LText {
                   mono: root.mono
@@ -164,11 +167,14 @@ PopupWindow {
               WrapperRectangle {
                 id: textRect
                 color: Style.transparent
+                leftMargin: Style.menuItemHorizontalMargin
+                rightMargin: Style.menuItemHorizontalMargin
+                topMargin: Style.menuItemVerticalMargin
+                bottomMargin: Style.menuItemVerticalMargin
                 radius: Style.menuItemRadius
-                margin: 8
 
                 RowLayout {
-                  spacing: 10
+                  spacing: Style.menuItemIconSpacing
 
                   LText {
                     mono: root.mono
@@ -219,8 +225,8 @@ PopupWindow {
             id: separatorComponent
             WrapperItem {
               id: item
-              topMargin: 3
-              bottomMargin: 3
+              topMargin: Style.menuSeparatorVerticalMargin
+              bottomMargin: Style.menuSeparatorVerticalMargin
               Divider {}
             }
           }
