@@ -3,7 +3,6 @@ import qs.common
 
 Pill {
   id: root
-  icon: "󰖐"
   monoTooltip: true
   property string url: "https://reg.bom.gov.au/fwo/IDV60901/IDV60901.94866.json"
 
@@ -65,17 +64,17 @@ Pill {
     return {
       "-": "",
       "Fine": "",
-      "Haze": isDay ? " 󰼰" : " 󰖑"
+      "Haze": isDay ? "󰼰" : "󰖑"
     }[weather]
   }
 
   function cloudIcon(isDay: bool, cloud: string): string {
     return {
       "-": "",
-      "Clear": isDay ? " 󰖙" : " 󰖔",
-      "Mostly clear": isDay ? " 󰖙" : " 󰖔",
-      "Partly cloudy": isDay ? " 󰖕" : " 󰼱",
-      "Cloudy": " 󰖐"
+      "Clear": isDay ? "󰖙" : "󰖔",
+      "Mostly clear": isDay ? "󰖙" : "󰖔",
+      "Partly cloudy": isDay ? "󰖕" : "󰼱",
+      "Cloudy": "󰖐"
     }[cloud]
   }
 
@@ -89,20 +88,34 @@ Pill {
     running: true
     repeat: true
     interval: 1800000
-    onTriggered: {
-      Util.httpGet(root.url, res => {
-        const data = res.json().observations.data[0]
-        const isDay = root.isDay(data.local_date_time_full)
-        root.text = `󰔏 ${data.air_temp}°C (${data.apparent_t}°C)  ${data.rel_hum}% ${root.windSpeedIcon(data.wind_spd_kt)} ${root.windDirIcon(data.wind_dir)} ${root.weatherIcon(isDay, data.weather)} ${root.cloudIcon(isDay, data.cloud)}`
-        root.tooltip = `Station Name:\t${data.name}
-Obs. Date/Time:\t${root.formatDateTime(data.local_date_time_full)}
-Temperature:\t${data.air_temp}°C
-Feels Like:\t${data.apparent_t}°C
-Humidity:\t${data.rel_hum}%
-Wind:\t\t${data.wind_spd_kmh}km/h (${data.wind_spd_kt}kts) ${data.wind_dir}
-Weather:\t\t${data.weather}
-Cloud Cover:\t${data.cloud}`
-      })
-    }
+    onTriggered: Util.httpGet(root.url, res => {
+      const {
+        name: stationName,
+        local_date_time_full: dateTime,
+        air_temp: airTemp,
+        apparent_t: apparentTemp,
+        rel_hum: humidity,
+        wind_spd_kmh: windSpeedKmh,
+        wind_spd_kt: windSpeedKnots,
+        wind_dir: windDir,
+        weather: weather,
+        cloud: cloud
+      } = res.json().observations.data[0]
+      const windSpeedIcon = root.windSpeedIcon(windSpeedKnots)
+      const windDirIcon = root.windDirIcon(windDir)
+      const isDay = root.isDay(dateTime)
+      const weatherIcon = root.weatherIcon(isDay, weather)
+      const cloudIcon = root.cloudIcon(isDay, cloud)
+      const icons = [windSpeedIcon, windDirIcon, weatherIcon, cloudIcon].filter(x => x).join(" ")
+      root.text = `󰔏 ${airTemp}°C (${apparentTemp}°C)  ${humidity}% ${icons}`
+      root.tooltip = `Station Name:\t${stationName}
+Obs. Date/Time:\t${root.formatDateTime(dateTime)}
+Temperature:\t${airTemp}°C
+Feels Like:\t${apparentTemp}°C
+Humidity:\t${humidity}%
+Wind:\t\t${windSpeedKmh}km/h (${windSpeedKnots}kts) ${windDir}
+Weather:\t\t${weather}
+Cloud Cover:\t${cloud}`
+    })
   }
 }
