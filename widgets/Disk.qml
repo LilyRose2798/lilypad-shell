@@ -7,6 +7,7 @@ Pill {
   monoTooltip: true
 
   RepeatedCommand {
+    interval: 60000
     command: ["df", root.path]
     onFinished: output => {
       const [filesystem, total, used, available, pct, path] = output.split("\n")[1].split(/\s+/)
