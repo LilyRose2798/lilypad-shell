@@ -1,3 +1,5 @@
+import qs.component.common
+
 Pill {
   id: root
   required property string path

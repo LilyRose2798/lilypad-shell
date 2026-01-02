@@ -8,7 +8,8 @@ import Quickshell.Services.Pipewire
 import Quickshell.Services.UPower
 import Quickshell.Wayland
 import qs.common
-import qs.widgets
+import qs.component.common
+import qs.component.pill
 
 ShellRoot {
   Component.onCompleted: {

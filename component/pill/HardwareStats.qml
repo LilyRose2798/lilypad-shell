@@ -1,4 +1,5 @@
 import qs.common
+import qs.component.common
 
 Pill {
   id: root

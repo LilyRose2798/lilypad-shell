@@ -1,10 +1,12 @@
 import QtQuick
 import Quickshell.Services.Mpris
 import qs.common
+import qs.component.common
 
 Pill {
   id: root
   spacing: 8
+
   function rankPlayer(player: MprisPlayer): int {
     const id = player.identity
     if (id.includes("mpd"))
@@ -19,18 +21,20 @@ Pill {
       return 5
     return -1
   }
-  property list<MprisPlayer> players: Mpris.players.values.filter(p => p !== null).sort((p, q) => rankPlayer(q) - rankPlayer(
-                                                                                          p))
+
+  property list<MprisPlayer> players: Mpris.players.values.filter(p => p !== null).sort((p, q) => rankPlayer(q) - rankPlayer(p))
   property MprisPlayer player: players[0] ?? null
   icon: player === null ? "󰎆" : ({
-                                   [MprisPlaybackState.Playing]: "󰏥",
-                                   [MprisPlaybackState.Paused]: "󰐌",
-                                   [MprisPlaybackState.Stopped]: "󰙦"
-                                 })[player.playbackState]
+      [MprisPlaybackState.Playing]: "󰏥",
+      [MprisPlaybackState.Paused]: "󰐌",
+      [MprisPlaybackState.Stopped]: "󰙦"
+    })[player.playbackState]
+
   LText {
     text: root.player === null ? "" : [root.player.trackArtist, root.player.trackTitle].filter(x => x).join(" - ")
     font.pointSize: Style.pillFontSize
   }
+
   tooltip: player === null ? "" : `${player.identity}${player.volumeSupported ? `
 Volume: ${(100 * player.volume).toFixed(0)}%` : ""}`
   onLeftClick: {
@@ -46,8 +50,7 @@ Volume: ${(100 * player.volume).toFixed(0)}%` : ""}`
       player?.previous()
   }
   onWheel: wheel => {
-             if (player?.canSeek)
-             player?.seek(wheel.angleDelta.y > 0 || wheel.angleDelta.x < 0 ? 1 : wheel.angleDelta.y < 0
-                                                                             || wheel.angleDelta.x > 0 ? -1 : 0)
-           }
+    if (player?.canSeek)
+      player?.seek(wheel.angleDelta.y > 0 || wheel.angleDelta.x < 0 ? 1 : wheel.angleDelta.y < 0 || wheel.angleDelta.x > 0 ? -1 : 0)
+  }
 }

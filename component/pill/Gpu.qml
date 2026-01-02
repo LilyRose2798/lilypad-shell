@@ -1,3 +1,5 @@
+import qs.component.common
+
 HardwareStats {
   id: root
   name: "gpu"
