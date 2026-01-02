@@ -12,8 +12,11 @@ PopupWindow {
   required property bool above
   property bool mono: false
   anchor.item: target
-  anchor.rect.x: -rect.implicitWidth / 2 + target.implicitWidth / 2
-  anchor.rect.y: above ? -rect.implicitHeight - Style.barPopupOffset : target.implicitHeight + Style.barPopupOffset
+  anchor.edges: above ? Edges.Top : Edges.Bottom
+  anchor.gravity: above ? Edges.Top : Edges.Bottom
+  anchor.adjustment: PopupAdjustment.SlideX
+  anchor.margins.bottom: -Style.barPopupOffset
+  anchor.margins.top: -Style.barPopupOffset
   implicitWidth: rect.implicitWidth
   implicitHeight: rect.implicitHeight
   color: Style.transparent
