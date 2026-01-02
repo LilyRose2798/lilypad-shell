@@ -13,4 +13,31 @@ Singleton {
   function flattenString(val: string): string {
     return val.trim().replace("\r\n", " ").replace("\n", " ")
   }
+
+  function httpRequest(url: string, method: string, body: var, contentType: var, cb: var) {
+    let req = new XMLHttpRequest()
+    req.onreadystatechange = function () {
+      if (req.readyState === XMLHttpRequest.DONE) {
+        cb({
+          status: req.status,
+          headers: req.getAllResponseHeaders(),
+          contentType: req.responseType,
+          content: req.response,
+          json: () => JSON.parse(req.response)
+        })
+      }
+    }
+    if (contentType)
+      req.setRequestHeader("Content-Type", contentType)
+    req.open(method, url)
+    req.send(body)
+  }
+
+  function httpGet(url: string, cb: var) {
+    httpRequest(url, "GET", null, null, cb)
+  }
+
+  function httpPost(url: string, body: var, contentType: string, cb: var) {
+    httpRequest(url, "POST", body, contentType, cb)
+  }
 }

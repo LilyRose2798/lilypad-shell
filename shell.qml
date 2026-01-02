@@ -69,6 +69,7 @@ ShellRoot {
           Loader {
             id: clock
             active: bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary
+            visible: active
             sourceComponent: Clock {
               screen: bar.screen
             }
@@ -77,7 +78,17 @@ ShellRoot {
           Loader {
             id: mpris
             active: Mpris.players.values.length > 0 && bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary
+            visible: active
             sourceComponent: Mpris {
+              screen: bar.screen
+            }
+          }
+
+          Loader {
+            id: weather
+            active: bar.screenType === ScreenType.Tertiary
+            visible: active
+            sourceComponent: Weather {
               screen: bar.screen
             }
           }
@@ -101,6 +112,7 @@ ShellRoot {
           Loader {
             id: tray
             active: bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary
+            visible: active
             sourceComponent: Tray {
               screen: bar.screen
             }
@@ -115,6 +127,7 @@ ShellRoot {
             Loader {
               id: battery
               active: UPower.devices.values.find(d => d.isLaptopBattery) !== null && bar.screenType === ScreenType.Laptop
+              visible: active
               sourceComponent: Battery {
                 screen: bar.screen
               }
@@ -128,6 +141,7 @@ ShellRoot {
             Loader {
               id: audio
               active: Pipewire.defaultAudioSink !== null && bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary
+              visible: active
               sourceComponent: Audio {
                 screen: bar.screen
               }
@@ -141,6 +155,7 @@ ShellRoot {
             Loader {
               id: bluetooth
               active: bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary
+              visible: active
               sourceComponent: Bluetooth {
                 screen: bar.screen
               }
@@ -153,6 +168,7 @@ ShellRoot {
 
             Loader {
               active: bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary
+              visible: active
               sourceComponent: Network {
                 screen: bar.screen
               }
