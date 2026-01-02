@@ -98,7 +98,7 @@ ShellRoot {
           anchors.verticalCenter: parent.verticalCenter
 
           Loader {
-            active: bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary || bar.screenType === ScreenType.Secondary
+            active: bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary
             sourceComponent: Tray {
               screen: bar.screen
             }
