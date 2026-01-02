@@ -53,7 +53,7 @@ ShellRoot {
 
       Component.onCompleted: {
         if (this.WlrLayershell != null)
-        this.WlrLayershell.keyboardFocus = WlrKeyboardFocus.OnDemand
+          this.WlrLayershell.keyboardFocus = WlrKeyboardFocus.OnDemand
       }
 
       Item {
@@ -74,8 +74,7 @@ ShellRoot {
           }
 
           Loader {
-            active: Mpris.players.values.length > 0 && bar.screenType === ScreenType.Laptop || bar.screenType
-                    === ScreenType.Primary
+            active: Mpris.players.values.length > 0 && bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary
 
             sourceComponent: Mpris {
               screen: bar.screen
@@ -99,7 +98,7 @@ ShellRoot {
           anchors.verticalCenter: parent.verticalCenter
 
           Loader {
-            active: bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary
+            active: bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary || bar.screenType === ScreenType.Secondary
             sourceComponent: Tray {
               screen: bar.screen
             }
@@ -113,8 +112,7 @@ ShellRoot {
 
             Loader {
               id: battery
-              active: UPower.devices.values.find(d => d.isLaptopBattery) !== null && bar.screenType
-                      === ScreenType.Laptop
+              active: UPower.devices.values.find(d => d.isLaptopBattery) !== null && bar.screenType === ScreenType.Laptop
               sourceComponent: Battery {
                 screen: bar.screen
               }
@@ -127,8 +125,7 @@ ShellRoot {
 
             Loader {
               id: audio
-              active: Pipewire.defaultAudioSink !== null && bar.screenType === ScreenType.Laptop || bar.screenType
-                      === ScreenType.Primary
+              active: Pipewire.defaultAudioSink !== null && bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary
               sourceComponent: Audio {
                 screen: bar.screen
               }

@@ -1,0 +1,3 @@
+Pill {
+  id: root
+}
