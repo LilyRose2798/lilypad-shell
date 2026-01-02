@@ -82,33 +82,29 @@ Pill {
     return `${dateTime.slice(8, 10)}:${dateTime.slice(10, 12)} ${dateTime.slice(6, 8)}/${dateTime.slice(4, 6)}/${dateTime.slice(0, 4)}`
   }
 
-  Timer {
-    id: timer
-    triggeredOnStart: true
-    running: true
-    repeat: true
-    interval: 1800000
-    onTriggered: Util.httpGet(root.url, res => {
-      const {
-        name: stationName,
-        local_date_time_full: dateTime,
-        air_temp: airTemp,
-        apparent_t: apparentTemp,
-        rel_hum: humidity,
-        wind_spd_kmh: windSpeedKmh,
-        wind_spd_kt: windSpeedKnots,
-        wind_dir: windDir,
-        weather: weather,
-        cloud: cloud
-      } = res.json().observations.data[0]
-      const windSpeedIcon = root.windSpeedIcon(windSpeedKnots)
-      const windDirIcon = root.windDirIcon(windDir)
-      const isDay = root.isDay(dateTime)
-      const weatherIcon = root.weatherIcon(isDay, weather)
-      const cloudIcon = root.cloudIcon(isDay, cloud)
-      const icons = [windSpeedIcon, windDirIcon, weatherIcon, cloudIcon].filter(x => x).join(" ")
-      root.text = `󰔏 ${airTemp}°C (${apparentTemp}°C)  ${humidity}% ${icons}`
-      root.tooltip = `Station Name:\t${stationName}
+  function handleResponse(res: var) {
+    if (res.status !== 200)
+      return
+    const {
+      name: stationName,
+      local_date_time_full: dateTime,
+      air_temp: airTemp,
+      apparent_t: apparentTemp,
+      rel_hum: humidity,
+      wind_spd_kmh: windSpeedKmh,
+      wind_spd_kt: windSpeedKnots,
+      wind_dir: windDir,
+      weather: weather,
+      cloud: cloud
+    } = res.json().observations.data[0]
+    const windSpeedIcon = root.windSpeedIcon(windSpeedKnots)
+    const windDirIcon = root.windDirIcon(windDir)
+    const isDay = root.isDay(dateTime)
+    const weatherIcon = root.weatherIcon(isDay, weather)
+    const cloudIcon = root.cloudIcon(isDay, cloud)
+    const icons = [windSpeedIcon, windDirIcon, weatherIcon, cloudIcon].filter(x => x).join(" ")
+    root.text = `󰔏 ${airTemp}°C (${apparentTemp}°C)  ${humidity}% ${icons}`
+    root.tooltip = `Station Name:\t${stationName}
 Obs. Date/Time:\t${root.formatDateTime(dateTime)}
 Temperature:\t${airTemp}°C
 Feels Like:\t${apparentTemp}°C
@@ -116,6 +112,14 @@ Humidity:\t${humidity}%
 Wind:\t\t${windSpeedKmh}km/h (${windSpeedKnots}kts) ${windDir}
 Weather:\t\t${weather}
 Cloud Cover:\t${cloud}`
-    })
+  }
+
+  Timer {
+    id: timer
+    triggeredOnStart: true
+    running: true
+    repeat: true
+    interval: 1800000
+    onTriggered: Util.httpGet(root.url, root.handleResponse)
   }
 }
