@@ -12,3 +12,4 @@ A shell by Lily
 - Add keyboard controls for all components
 - Add mouse interaction for more pill components (click to open widget)
 - Add animations
+- Consider factoring out timers from pill components and add an update function that can be called from outside them in order to synchronize timers
