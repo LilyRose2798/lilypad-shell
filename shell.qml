@@ -85,6 +85,50 @@ ShellRoot {
           }
 
           Loader {
+            id: diskRoot
+            active: bar.screenType === ScreenType.Secondary
+            visible: active
+            sourceComponent: Disk {
+              path: "/"
+              name: "root"
+              screen: bar.screen
+            }
+          }
+
+          Loader {
+            id: diskData
+            active: bar.screenType === ScreenType.Secondary
+            visible: active
+            sourceComponent: Disk {
+              path: "/data"
+              name: "data"
+              screen: bar.screen
+            }
+          }
+
+          Loader {
+            id: diskBackups
+            active: bar.screenType === ScreenType.Secondary
+            visible: active
+            sourceComponent: Disk {
+              path: "/backups"
+              name: "backups"
+              screen: bar.screen
+            }
+          }
+
+          Loader {
+            id: diskGames
+            active: bar.screenType === ScreenType.Secondary
+            visible: active
+            sourceComponent: Disk {
+              path: "/games"
+              name: "games"
+              screen: bar.screen
+            }
+          }
+
+          Loader {
             id: weather
             active: bar.screenType === ScreenType.Tertiary
             visible: active
