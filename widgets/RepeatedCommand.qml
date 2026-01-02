@@ -1,7 +1,6 @@
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import qs.common
 
 Scope {
   id: root
@@ -9,13 +8,13 @@ Scope {
   property double interval: 5000
   property alias process: process
   property alias timer: timer
-  property string output
+  signal finished(output: string)
 
   Process {
     id: process
     command: root.command
     stdout: StdioCollector {
-      onStreamFinished: root.output = Util.flattenString(this.text)
+      onStreamFinished: root.finished(this.text)
     }
   }
 

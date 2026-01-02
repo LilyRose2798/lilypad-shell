@@ -174,6 +174,24 @@ ShellRoot {
               }
             }
           }
+
+          Loader {
+            id: cpu
+            active: bar.screenType === ScreenType.Secondary
+            visible: active
+            sourceComponent: Cpu {
+              screen: bar.screen
+            }
+          }
+
+          Loader {
+            id: gpu
+            active: bar.screenType === ScreenType.Secondary
+            visible: active
+            sourceComponent: Gpu {
+              screen: bar.screen
+            }
+          }
         }
       }
     }
