@@ -67,6 +67,7 @@ ShellRoot {
           anchors.verticalCenter: parent.verticalCenter
 
           Loader {
+            id: clock
             active: bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary
             sourceComponent: Clock {
               screen: bar.screen
@@ -74,8 +75,8 @@ ShellRoot {
           }
 
           Loader {
+            id: mpris
             active: Mpris.players.values.length > 0 && bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary
-
             sourceComponent: Mpris {
               screen: bar.screen
             }
@@ -98,6 +99,7 @@ ShellRoot {
           anchors.verticalCenter: parent.verticalCenter
 
           Loader {
+            id: tray
             active: bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary
             sourceComponent: Tray {
               screen: bar.screen
