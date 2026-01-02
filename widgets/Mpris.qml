@@ -19,18 +19,20 @@ Pill {
       return 5
     return -1
   }
-  property MprisPlayer player: [...Mpris.players.values].sort((p, q) => rankPlayer(q) - rankPlayer(p))[0] ?? null
+  property list<MprisPlayer> players: Mpris.players.values.filter(p => p !== null).sort((p, q) => rankPlayer(q) - rankPlayer(
+                                                                                          p))
+  property MprisPlayer player: players[0] ?? null
   icon: player === null ? "󰎆" : ({
                                    [MprisPlaybackState.Playing]: "󰏥",
                                    [MprisPlaybackState.Paused]: "󰐌",
                                    [MprisPlaybackState.Stopped]: "󰙦"
                                  })[player.playbackState]
   LText {
-    text: `${root.player?.trackArtist ?? "?"} - ${root.player?.trackTitle ?? "?"}`
+    text: root.player === null ? "" : [root.player.trackArtist, root.player.trackTitle].filter(x => x).join(" - ")
     font.pointSize: Style.pillFontSize
   }
-  tooltip: `${player?.identity ?? ""}${player?.volumeSupported ? `\nVolume: ${(100 * (player?.volume ?? 1)).toFixed(0)
-                                                                 }%` : ""}`
+  tooltip: player === null ? "" : `${player.identity}${player.volumeSupported ? `
+Volume: ${(100 * player.volume).toFixed(0)}%` : ""}`
   onLeftClick: {
     if (player?.canTogglePlaying)
       player?.togglePlaying()
