@@ -11,7 +11,6 @@ Singleton {
   readonly property double barHeight: 32
   readonly property double barHorizontalMargin: 10
   readonly property double barSpacing: 10
-  readonly property double barPopupOffset: 4
   readonly property string pillBgColor: "#282C34"
   readonly property double pillFontSize: 10.5
   readonly property double pillHeight: 24
@@ -27,18 +26,25 @@ Singleton {
   readonly property string workspacesActiveColor: "#2A6A9E"
   readonly property double workspacesAnimationSpeed: 100
   readonly property double workspacesTooltipDelay: 1000
+  readonly property double popupHorizontalMargin: 8
+  readonly property double popupVerticalMargin: 8
+  readonly property double popupRadius: 10
+  readonly property double popupOffset: 4
+  readonly property string popupBgColor: pillBgColor
   readonly property double tooltipDelay: 500
-  readonly property double tooltipHorizontalMargin: 12
-  readonly property double tooltipVerticalMargin: 8
-  readonly property double tooltipRadius: 12
-  readonly property double menuHorizontalMargin: 8
-  readonly property double menuVerticalMargin: 8
-  readonly property double menuRadius: 10
+  readonly property double tooltipHorizontalMargin: popupHorizontalMargin + 4
+  readonly property double tooltipVerticalMargin: popupVerticalMargin
+  readonly property double tooltipRadius: popupRadius + 4
+  readonly property string tooltipBgColor: popupBgColor
+  readonly property double menuHorizontalMargin: popupHorizontalMargin
+  readonly property double menuVerticalMargin: popupVerticalMargin
+  readonly property double menuRadius: popupRadius
+  readonly property string menuBgColor: popupBgColor
   readonly property double menuItemSpacing: 0
-  readonly property double menuItemHorizontalMargin: 8
-  readonly property double menuItemVerticalMargin: 8
-  readonly property double menuItemRadius: 10
-  readonly property double menuItemIconSpacing: 10
-  readonly property double menuSeparatorVerticalMargin: 3
+  readonly property double menuItemHorizontalMargin: menuHorizontalMargin
+  readonly property double menuItemVerticalMargin: menuVerticalMargin
+  readonly property double menuItemRadius: menuRadius
+  readonly property double menuItemIconSpacing: menuItemHorizontalMargin
+  readonly property double menuSeparatorVerticalMargin: menuVerticalMargin / 2
   readonly property string menuHoverBgColor: "#22FFFFFF"
 }
