@@ -79,7 +79,7 @@ ShellRoot {
 
           Loader {
             id: mpris
-            active: Mpris.players.values.length > 0 && bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary
+            active: Mpris.players.values.filter(p => p !== null).length > 0 && (bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary)
             visible: active
             sourceComponent: Mpris {
               screen: bar.screen
@@ -186,7 +186,7 @@ ShellRoot {
 
             Loader {
               id: audio
-              active: Pipewire.defaultAudioSink !== null && bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary
+              active: Pipewire.defaultAudioSink !== null && (bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary)
               visible: active
               sourceComponent: Audio {
                 screen: bar.screen
@@ -195,6 +195,20 @@ ShellRoot {
 
             Divider {
               visible: audio.active
+              vertical: true
+            }
+
+            Loader {
+              id: brightness
+              active: bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary
+              visible: active
+              sourceComponent: Brightness {
+                screen: bar.screen
+              }
+            }
+
+            Divider {
+              visible: brightness.active
               vertical: true
             }
 

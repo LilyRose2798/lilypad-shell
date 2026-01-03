@@ -31,6 +31,7 @@ Pill {
     })[player.playbackState]
 
   LText {
+    visible: text !== ""
     text: root.player === null ? "" : [root.player.trackArtist, root.player.trackTitle].filter(x => x).join(" - ")
     font.pointSize: Style.pillFontSize
   }
