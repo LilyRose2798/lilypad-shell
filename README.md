@@ -5,7 +5,6 @@ A shell by Lily
 - Add MPD pill component
 - Add brightness/DDC control pill component
 - Add network pill component (waiting on [PR #96](https://github.com/quickshell-mirror/quickshell/pull/96) which adds Netwok Manager integration)
-- Improve bluetooth component by showing device battery levels
 - Improve tooltips across all pill components
 - Add widgets for all pill components
 - Add keyboard controls for all components
