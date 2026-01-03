@@ -20,9 +20,11 @@ Singleton {
       if (req.readyState === XMLHttpRequest.DONE) {
         cb({
           status: req.status,
+          statusText: req.statusText,
           headers: req.getAllResponseHeaders(),
           contentType: req.responseType,
-          content: req.response,
+          text: req.responseText,
+          xml: req.responseXML,
           json: () => JSON.parse(req.response)
         })
       }

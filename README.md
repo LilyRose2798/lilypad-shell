@@ -2,7 +2,6 @@
 A shell by Lily
 
 ## TODO
-- Add weather forecast pill component (requires FTP download, probably using curl)
 - Add MPD pill component
 - Add brightness/DDC control pill component
 - Add network pill component (waiting on [PR #96](https://github.com/quickshell-mirror/quickshell/pull/96) which adds Netwok Manager integration)

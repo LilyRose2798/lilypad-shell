@@ -1,3 +1,4 @@
+//@ pragma Env QML_XHR_ALLOW_FILE_READ=1
 pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
@@ -234,6 +235,15 @@ ShellRoot {
             active: bar.screenType === ScreenType.Secondary
             visible: active
             sourceComponent: Gpu {
+              screen: bar.screen
+            }
+          }
+
+          Loader {
+            id: forecast
+            active: bar.screenType === ScreenType.Tertiary
+            visible: active
+            sourceComponent: Forecast {
               screen: bar.screen
             }
           }
