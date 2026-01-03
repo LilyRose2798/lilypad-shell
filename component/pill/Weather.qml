@@ -4,7 +4,9 @@ import qs.common
 Pill {
   id: root
   monoTooltip: true
-  property string url: "https://reg.bom.gov.au/fwo/IDV60901/IDV60901.94866.json"
+  property string station: "IDV60901"
+  property string wmo: "94866"
+  readonly property string url: `https://reg.bom.gov.au/fwo/${station}/${station}.${wmo}.json`
 
   function windSpeedIcon(windSpeed: double): string {
     if (windSpeed < 1)

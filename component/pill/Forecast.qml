@@ -9,6 +9,7 @@ Pill {
   property string station: "IDV10753"
   readonly property string fileName: `${station}.xml`
   readonly property string filePath: `/tmp/${fileName}`
+  readonly property string url: `ftp://ftp.bom.gov.au/anon/gen/fwo/${fileName}`
 
   function findElement(element: var, name = null, where = null): var {
     const children = element.childNodes
@@ -97,7 +98,7 @@ Pill {
 
   RepeatedCommand {
     interval: 60000
-    command: ["curl", "-s", `ftp://ftp.bom.gov.au/anon/gen/fwo/${root.fileName}`, "-o", root.filePath]
+    command: ["curl", "-s", root.url, "-o", root.filePath]
     onFinished: Util.httpGet(root.filePath, root.handleResponse)
   }
 }
