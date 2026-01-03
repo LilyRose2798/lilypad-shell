@@ -77,7 +77,7 @@ Pill {
       const minTemp = values.air_temperature_minimum === undefined ? "  " : Util.zeroPad(values.air_temperature_minimum, 2)
       const maxTemp = values.air_temperature_maximum === undefined ? "  " : Util.zeroPad(values.air_temperature_maximum, 2)
       const precip = values.probability_of_precipitation === undefined ? "??%" : Util.zeroPad(values.probability_of_precipitation, 3)
-      const precipRange = values.precipitation_range
+      const precipRange = values.precipitation_range === undefined ? "" : values.precipitation_range.replace(" to ", "-").replace(" mm", "mm")
       const precis = values.precis ?? ""
       return {
         index,
