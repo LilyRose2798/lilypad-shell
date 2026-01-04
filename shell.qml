@@ -80,7 +80,7 @@ ShellRoot {
 
           Loader {
             id: mpris
-            active: Mpris.players.values.filter(p => p !== null).length > 0 && (bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary)
+            active: Mpris.players.values.length > 0 && (bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary)
             visible: active
             sourceComponent: Mpris {
               screen: bar.screen
@@ -158,7 +158,7 @@ ShellRoot {
 
           Loader {
             id: tray
-            active: SystemTray.items.values.filter(i => i !== null).length > 0 && (bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary)
+            active: SystemTray.items.values.length > 0 && (bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary)
             visible: active
             sourceComponent: Tray {
               screen: bar.screen

@@ -1,4 +1,6 @@
+pragma ComponentBehavior: Bound
 import QtQuick
+import Quickshell
 import Quickshell.Services.Mpris
 import qs.common
 import qs.component.common
@@ -9,49 +11,61 @@ Pill {
 
   function rankPlayer(player: MprisPlayer): int {
     const id = player.identity
+    const base = player.isPlaying ? -1 : -100
     if (id.includes("mpd"))
-      return 10
+      return base + 10
     if (id.includes("feishin"))
-      return 8
+      return base + 8
     if (id.includes("spotify"))
-      return 7
+      return base + 7
     if (id.includes("firefox"))
-      return 6
+      return base + 6
     if (id.includes("chrome"))
-      return 5
-    return -1
+      return base + 5
+    return base
   }
 
-  property list<MprisPlayer> players: Mpris.players.values.filter(p => p !== null).sort((p, q) => rankPlayer(q) - rankPlayer(p))
-  property MprisPlayer player: players[0] ?? null
-  icon: player === null ? "󰎆" : ({
+  property MprisPlayer activePlayer: Mpris.players.values.sort((p, q) => rankPlayer(q) - rankPlayer(p))[0] ?? null
+
+  Variants {
+    model: Mpris.players.values
+    delegate: Scope {
+      required property MprisPlayer modelData
+      property int playbackState: modelData.playbackState
+      property int uniqueId: modelData.uniqueId
+      onPlaybackStateChanged: root.activePlayer = modelData
+      onUniqueIdChanged: root.activePlayer = modelData
+    }
+  }
+
+  icon: activePlayer === null ? "󰎆" : ({
       [MprisPlaybackState.Playing]: "󰏥",
       [MprisPlaybackState.Paused]: "󰐌",
       [MprisPlaybackState.Stopped]: "󰙦"
-    })[player.playbackState]
+    })[activePlayer.playbackState]
 
   LText {
     visible: text !== ""
-    text: root.player === null ? "" : [root.player.trackArtist, root.player.trackTitle].filter(x => x).join(" - ")
+    text: root.activePlayer === null ? "" : [root.activePlayer.trackArtist, root.activePlayer.trackTitle].filter(x => x).join(" - ")
     font.pointSize: Style.pillFontSize
   }
 
-  tooltip: player === null ? "" : `${player.identity}${player.volumeSupported ? `
-Volume: ${(100 * player.volume).toFixed(0)}%` : ""}`
+  tooltip: activePlayer === null ? "" : `${activePlayer.identity}${activePlayer.volumeSupported ? `
+Volume: ${(100 * activePlayer.volume).toFixed(0)}%` : ""}`
   onLeftClick: {
-    if (player?.canTogglePlaying)
-      player?.togglePlaying()
+    if (activePlayer?.canTogglePlaying)
+      activePlayer?.togglePlaying()
   }
   onMiddleClick: {
-    if (player?.canGoNext)
-      player?.next()
+    if (activePlayer?.canGoNext)
+      activePlayer?.next()
   }
   onRightClick: {
-    if (player?.canGoPrevious)
-      player?.previous()
+    if (activePlayer?.canGoPrevious)
+      activePlayer?.previous()
   }
   onWheel: wheel => {
-    if (player?.canSeek)
-      player?.seek(wheel.angleDelta.y > 0 || wheel.angleDelta.x < 0 ? 1 : wheel.angleDelta.y < 0 || wheel.angleDelta.x > 0 ? -1 : 0)
+    if (activePlayer?.canSeek)
+      activePlayer?.seek(wheel.angleDelta.y > 0 || wheel.angleDelta.x < 0 ? 1 : wheel.angleDelta.y < 0 || wheel.angleDelta.x > 0 ? -1 : 0)
   }
 }
