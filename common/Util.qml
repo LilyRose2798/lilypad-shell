@@ -14,6 +14,10 @@ Singleton {
     return val.trim().replace("\r\n", " ").replace("\n", " ")
   }
 
+  function truncate(val: string, maxLength: int): string {
+    return val.length <= maxLength ? val : `${val.slice(0, maxLength - 1)}…`
+  }
+
   function httpRequest(url: string, method: string, body: var, contentType: var, cb: var) {
     let req = new XMLHttpRequest()
     req.onreadystatechange = function () {

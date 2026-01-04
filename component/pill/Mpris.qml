@@ -8,6 +8,7 @@ import qs.component.common
 Pill {
   id: root
   spacing: 8
+  property int maxLength: 40
 
   function rankPlayer(player: MprisPlayer): int {
     const id = player.identity
@@ -46,7 +47,7 @@ Pill {
 
   LText {
     visible: text !== ""
-    text: root.activePlayer === null ? "" : [root.activePlayer.trackArtist, root.activePlayer.trackTitle].filter(x => x).join(" - ")
+    text: root.activePlayer === null ? "" : Util.truncate([root.activePlayer.trackArtist, root.activePlayer.trackTitle].filter(x => x).join(" - "), root.maxLength)
     font.pointSize: Style.pillFontSize
   }
 

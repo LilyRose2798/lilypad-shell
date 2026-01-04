@@ -83,6 +83,7 @@ ShellRoot {
             active: Mpris.players.values.length > 0 && (bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary)
             visible: active
             sourceComponent: Mpris {
+              maxLength: bar.screenType === ScreenType.Laptop ? 32 : 50
               screen: bar.screen
             }
           }
