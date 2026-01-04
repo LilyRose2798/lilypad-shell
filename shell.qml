@@ -6,6 +6,7 @@ import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Services.Mpris
 import Quickshell.Services.Pipewire
+import Quickshell.Services.SystemTray
 import Quickshell.Services.UPower
 import Quickshell.Wayland
 import qs.common
@@ -157,7 +158,7 @@ ShellRoot {
 
           Loader {
             id: tray
-            active: bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary
+            active: SystemTray.items.values.filter(i => i !== null).length > 0 && (bar.screenType === ScreenType.Laptop || bar.screenType === ScreenType.Primary)
             visible: active
             sourceComponent: Tray {
               screen: bar.screen
