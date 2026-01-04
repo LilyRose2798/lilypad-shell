@@ -58,13 +58,13 @@ Pill {
       const devices = output.trim().split("\n").map(line => line.split(",")).map(([name, type, cur, _, max]) => ({
             name,
             pct: parseInt(cur) / parseInt(max)
-          }))
+          })).sort((a, b) => a.name.localeCompare(b.name))
       let pct = 0
       for (const d of devices)
         pct += d.pct
       pct /= devices.length
       root.brightness = Math.round(root.step * Math.round((100 / root.step) * pct))
-      root.tooltip = devices.map(d => `${d.name}: ${(100 * d.pct).toFixed(0)}%`).join("\n")
+      root.tooltip = devices.map(d => `${(100 * d.pct).toFixed(0)}%`).join(" | ")
       variants.model = devices.map(d => d.name)
       for (const name of devices.filter(d => Math.round(100 * d.pct) !== root.brightness).map(d => d.name)) {
         cmd.timer.stop()
