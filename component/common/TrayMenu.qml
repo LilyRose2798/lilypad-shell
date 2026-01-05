@@ -16,18 +16,14 @@ Popup {
   signal closed
 
   function back() {
-    visible = false
     const [first, ...rest] = parentEntries
     parentEntries = rest
     entries = first
-    visible = true
   }
 
   function forward(newEntries: ObjectModel) {
-    visible = false
     parentEntries = [entries, ...parentEntries]
     entries = newEntries
-    visible = true
   }
 
   ColumnLayout {

@@ -32,6 +32,13 @@ PopupWindow {
       this.WlrLayershell.keyboardFocus = WlrKeyboardFocus.OnDemand
   }
 
+  function redraw() {
+    visible = false
+    visible = true
+  }
+  onImplicitWidthChanged: redraw()
+  onImplicitHeightChanged: redraw()
+
   WrapperRectangle {
     id: content
     leftMargin: root.horizontalMargin
