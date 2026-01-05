@@ -17,7 +17,7 @@ Pill {
   Repeater {
     model: ScriptModel {
       objectProp: "id"
-      values: SystemTray.items.values.sort((a, b) => a.tooltipTitle.localeCompare(b.tooltipTitle))
+      values: [...SystemTray.items.values].sort((a, b) => a.tooltipTitle.localeCompare(b.tooltipTitle))
     }
     delegate: Pill {
       id: item
@@ -39,7 +39,7 @@ Pill {
       }
 
       IconImage {
-        source: item.modelData.icon
+        source: item.modelData.icon ?? Quickshell.iconPath("image-missing-symbolic")
         implicitSize: Style.trayIconSize
       }
 
