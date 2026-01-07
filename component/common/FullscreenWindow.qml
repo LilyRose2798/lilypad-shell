@@ -23,9 +23,6 @@ PanelWindow {
     acceptedButtons: Qt.AllButtons
     onClicked: e => root.clicked(e)
     focus: true
-
-    Keys.onEscapePressed: {
-      root.closed()
-    }
+    Keys.onEscapePressed: root.closed()
   }
 }

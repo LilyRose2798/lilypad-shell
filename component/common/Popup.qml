@@ -44,9 +44,6 @@ PopupWindow {
     radius: root.radius
     color: root.bgColor
     focus: true
-
-    Keys.onEscapePressed: {
-      root.closed()
-    }
+    Keys.onEscapePressed: root.closed()
   }
 }
