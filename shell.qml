@@ -294,4 +294,10 @@ ShellRoot {
       screen: hexLoader.screen
     }
   }
+
+  GlobalShortcut {
+    name: "hexcasting"
+    description: "Start Hex Casting"
+    onPressed: hexLoader.active = true
+  }
 }
