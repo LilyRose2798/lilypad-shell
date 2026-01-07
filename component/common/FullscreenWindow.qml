@@ -1,7 +1,6 @@
 import QtQml
 import QtQuick
 import Quickshell
-import Quickshell.Wayland
 import qs.common
 
 PanelWindow {
@@ -11,18 +10,22 @@ PanelWindow {
   anchors.left: true
   anchors.right: true
   visible: true
+  focusable: true
   exclusionMode: ExclusionMode.Ignore
   color: Style.transparent
   signal clicked(MouseEvent e)
-
-  Component.onCompleted: {
-    if (this.WlrLayershell != null)
-      this.WlrLayershell.keyboardFocus = WlrKeyboardFocus.OnDemand
-  }
+  property alias mouse: mouse
+  signal closed
 
   MouseArea {
+    id: mouse
     anchors.fill: parent
     acceptedButtons: Qt.AllButtons
     onClicked: e => root.clicked(e)
+    focus: true
+
+    Keys.onEscapePressed: {
+      root.closed()
+    }
   }
 }

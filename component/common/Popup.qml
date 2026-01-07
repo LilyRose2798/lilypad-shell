@@ -26,11 +26,7 @@ PopupWindow {
   implicitHeight: content.implicitHeight
   color: Style.transparent
   visible: true
-
-  Component.onCompleted: {
-    if (this.WlrLayershell != null)
-      this.WlrLayershell.keyboardFocus = WlrKeyboardFocus.OnDemand
-  }
+  signal closed
 
   function redraw() {
     visible = false
@@ -47,5 +43,10 @@ PopupWindow {
     bottomMargin: root.verticalMargin
     radius: root.radius
     color: root.bgColor
+    focus: true
+
+    Keys.onEscapePressed: {
+      root.closed()
+    }
   }
 }

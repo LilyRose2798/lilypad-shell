@@ -13,7 +13,6 @@ Popup {
   bgColor: Style.menuBgColor
   required property ObjectModel entries
   property list<ObjectModel> parentEntries: []
-  signal closed
 
   function back() {
     const [first, ...rest] = parentEntries

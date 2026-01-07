@@ -55,6 +55,7 @@ Pill {
 
     FullscreenWindow {
       onClicked: root.entries = null
+      onClosed: root.entries = null
 
       TrayMenu {
         id: tray
