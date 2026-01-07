@@ -41,8 +41,7 @@ FullscreenWindow {
     id: canvas
     width: root.width
     height: root.height
-    antialiasing: true
-    focus: true
+    renderStrategy: Canvas.Threaded
     property double prevRenderTimestamp
     property double prevOvershoot
     readonly property double fps: Style.hexFps
@@ -69,7 +68,6 @@ FullscreenWindow {
     readonly property color lineOuterColor: Style.hexLineOuterColor
     property list<point> nodes: []
     property list<double> lightningOffsets: []
-    renderStrategy: Canvas.Threaded
 
     function distanceSquared(from: point, to: point): double {
       const dx = Math.abs(from.x - to.x)
