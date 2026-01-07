@@ -227,7 +227,6 @@ FullscreenWindow {
           shape.push(cur.y === prev.y ? (cur.x > prev.x ? 0 : 3) : (cur.x + cur.y % 2 > prev.x ? (cur.y > prev.y ? 1 : 5) : (cur.y > prev.y ? 2 : 4)))
           prev = cur
         }
-        console.log(normNodes, shape)
         root.cast(startNode.y, startNode.x, shape)
         let spellCast = false
         const potentialSpells = root.spells.filter(s => s.shape.length === shape.length)
@@ -279,7 +278,7 @@ FullscreenWindow {
         render(timestamp, delta)
         prevRenderTimestamp = timestamp
         if (overshotDelta > 4 * frameDelta)
-          console.log(`Can't keep up, ${overshotDelta.toFixed(0)}ms behind`)
+          Logger.warn(`Can't keep up, ${overshotDelta.toFixed(0)}ms behind`)
         prevOvershoot = overshotDelta - frameDelta
       }
       requestAnimationFrame(animate)
