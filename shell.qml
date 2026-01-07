@@ -147,7 +147,25 @@ ShellRoot {
           anchors.horizontalCenter: parent.horizontalCenter
           anchors.verticalCenter: parent.verticalCenter
 
+          Pill {
+            icon: "󰋙"
+            onClick: {
+              hexLoader.active = true
+              hexLoader.screen = bar.screen
+            }
+            screen: bar.screen
+          }
+
           Workspaces {
+            screen: bar.screen
+          }
+
+          Pill {
+            icon: "󰋙"
+            onClick: {
+              hexLoader.active = true
+              hexLoader.screen = bar.screen
+            }
             screen: bar.screen
           }
         }
@@ -265,6 +283,15 @@ ShellRoot {
           }
         }
       }
+    }
+  }
+
+  LazyLoader {
+    id: hexLoader
+    property ShellScreen screen
+    HexCasting {
+      onClosed: hexLoader.active = false
+      screen: hexLoader.screen
     }
   }
 }
