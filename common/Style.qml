@@ -49,14 +49,4 @@ Singleton {
   readonly property double menuItemIconSpacing: menuItemHorizontalMargin
   readonly property double menuSeparatorVerticalMargin: menuVerticalMargin / 2
   readonly property string menuHoverBgColor: "#22FFFFFF"
-  readonly property color hexInactiveColor: Qt.color("#66FFE6")
-  readonly property color hexActiveColor: Qt.color("#DEB8CC")
-  readonly property color hexLineInnerColor: Qt.color("#B1E3FF")
-  readonly property color hexLineOuterColor: Qt.color("#DD79D2FF")
-  readonly property double hexFps: 30 // max of 60
-  readonly property double hexNodeWidth: 6
-  readonly property double hexVisibilityFactor: 2.5
-  readonly property double hexGridWidth: 100
-  readonly property double hexDrawTolerance: 20
-  readonly property int hexLightningPoints: 9
 }

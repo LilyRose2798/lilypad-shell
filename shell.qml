@@ -1,5 +1,6 @@
 //@ pragma Env QML_XHR_ALLOW_FILE_READ=1
 pragma ComponentBehavior: Bound
+import HexCasting
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
@@ -289,9 +290,20 @@ ShellRoot {
   LazyLoader {
     id: hexLoader
     property ShellScreen screen
-    HexCasting {
-      onClosed: hexLoader.active = false
+    FullscreenWindow {
       screen: hexLoader.screen
+      onClosed: hexLoader.active = false
+
+      HexCasting {
+        anchors.fill: parent
+        onSpellCast: hexLoader.active = false
+
+        HexSpell {
+          reversible: true
+          shape: [0, 1, 2, 3, 4, 5]
+          onCast: Logger.info("cast hexagon")
+        }
+      }
     }
   }
 
