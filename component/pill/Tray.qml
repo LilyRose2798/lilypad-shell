@@ -24,28 +24,28 @@ Pill {
       screen: root.screen
       horizontalMargin: 6
       required property SystemTrayItem modelData
-      tooltip: modelData.tooltipTitle
-      onLeftClick: modelData.activate()
+      tooltip: modelData?.tooltipTitle
+      onLeftClick: modelData?.activate()
       onRightClick: {
         root.item = item
         root.entries = menuOpener.children
       }
-      onMiddleClick: modelData.secondaryActivate()
+      onMiddleClick: modelData?.secondaryActivate()
       onWheel: wheel => {
         if (wheel.angleDelta.x !== 0)
-          modelData.scroll(wheel.angleDelta.x, true)
+          modelData?.scroll(wheel.angleDelta.x, true)
         else if (wheel.angleDelta.y !== 0)
-          modelData.scroll(wheel.angleDelta.y, false)
+          modelData?.scroll(wheel.angleDelta.y, false)
       }
 
       IconImage {
-        source: item.modelData.icon ?? Quickshell.iconPath("image-missing-symbolic")
+        source: item.modelData?.icon ?? Quickshell.iconPath("image-missing-symbolic")
         implicitSize: Style.trayIconSize
       }
 
       QsMenuOpener {
         id: menuOpener
-        menu: item.modelData.menu
+        menu: item.modelData?.menu
       }
     }
   }
