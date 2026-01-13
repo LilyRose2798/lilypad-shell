@@ -7,6 +7,7 @@ Pill {
   id: root
   monoTooltip: true
   property string station: "IDV10753"
+  property string area: "Sunbury"
   readonly property string fileName: `${station}.xml`
   readonly property string filePath: `/tmp/${fileName}`
   readonly property string url: `ftp://ftp.bom.gov.au/anon/gen/fwo/${fileName}`
@@ -63,7 +64,7 @@ Pill {
   function handleResponse(res: var) {
     if (res.status !== 200)
       return
-    const forecasts = matchingElement(res.xml.documentElement, "product")?.findElement("forecast")?.findElement("area", e => e.attrs.description === "Sunbury")?.findElements("forecast-period")?.map(e => {
+    const forecasts = matchingElement(res.xml.documentElement, "product")?.findElement("forecast")?.findElement("area", e => e.attrs.description === root.area)?.findElements("forecast-period")?.map(e => {
       const index = parseInt(e.attrs.index)
       const start = new Date(e.attrs["start-time-local"])
       const end = new Date(e.attrs["end-time-local"])
