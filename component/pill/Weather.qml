@@ -8,7 +8,7 @@ Pill {
   property string wmo: "94866"
   readonly property string url: `https://reg.bom.gov.au/fwo/${station}/${station}.${wmo}.json`
 
-  function windSpeedIcon(windSpeed: double): string {
+  function windSpeedIcon(windSpeed: double): var {
     if (windSpeed < 1)
       return ""
     if (windSpeed < 4)
@@ -33,10 +33,12 @@ Pill {
       return ""
     if (windSpeed < 64)
       return ""
-    return ""
+    if (windSpeed >= 64)
+      return ""
+    return undefined
   }
 
-  function windDirIcon(windDir: string): string {
+  function windDirIcon(windDir: string): var {
     return {
       "N": "",
       "NNE": "",
@@ -62,7 +64,7 @@ Pill {
     return hour >= 6 && hour < 19
   }
 
-  function weatherIcon(isDay: bool, weather: string): string {
+  function weatherIcon(isDay: bool, weather: string): var {
     return {
       "-": "",
       "Fine": "",
@@ -70,12 +72,14 @@ Pill {
     }[weather]
   }
 
-  function cloudIcon(isDay: bool, cloud: string): string {
+  function cloudIcon(isDay: bool, cloud: string): var {
     return {
       "-": "",
       "Clear": isDay ? "󰖙" : "󰖔",
+      "Partly clear": isDay ? "󰖙" : "󰖔",
       "Mostly clear": isDay ? "󰖙" : "󰖔",
       "Partly cloudy": isDay ? "󰖕" : "󰼱",
+      "Mostly cloudy": isDay ? "󰖕" : "󰼱",
       "Cloudy": "󰖐"
     }[cloud]
   }
