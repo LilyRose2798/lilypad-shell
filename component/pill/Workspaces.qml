@@ -14,25 +14,26 @@ Pill {
   Repeater {
     model: ScriptModel {
       objectProp: "id"
-      values: Hyprland.workspaces.values.filter(ws => ws.monitor === monitor)
+      values: Hyprland.workspaces.values.filter(ws => ws.monitor == root.monitor)
     }
     delegate: Pill {
       id: item
       screen: root.screen
       required property HyprlandWorkspace modelData
       readonly property list<HyprlandToplevel> toplevels: modelData.toplevels.values
+      readonly property bool isActive: root.monitor.activeWorkspace.id == modelData.id
       text: modelData.name
       tooltip: toplevels.length === 0 ? "No Windows" : `${toplevels.length} Window${toplevels.length === 1 ? "" : "s"}:
 ${toplevels.map(w => w.lastIpcObject).filter(w => w !== null).map(w => `${w.title} [${w.class}]`).join("\n")}`
       tooltipDelay: Style.workspacesTooltipDelay
-      txt.active: modelData.active || modelData.toplevels.values.length > 0
+      txt.active: modelData.active || toplevels.length > 0
       onLeftClick: {
-        if (Hyprland.focusedWorkspace !== modelData)
-          modelData.activate()
+        if (!item.isActive)
+          Hyprland.dispatch("hl.dsp.focus({ workspace = " + modelData.id + " })")
       }
       clickable: true
-      horizontalMargin: modelData === Hyprland.focusedWorkspace ? 20 : 10
-      rect.color: modelData.urgent ? Style.workspacesUrgentColor : modelData === Hyprland.focusedWorkspace ? Style.workspacesFocusedColor : modelData.active ? Style.workspacesActiveColor : Style.transparent
+      horizontalMargin: item.isActive && root.monitor.focused ? 20 : 10
+      rect.color: modelData.urgent ? Style.workspacesUrgentColor : (item.isActive ? (root.monitor.focused ? Style.workspacesFocusedColor : Style.workspacesActiveColor) : Style.transparent)
 
       Behavior on horizontalMargin {
         NumberAnimation {
