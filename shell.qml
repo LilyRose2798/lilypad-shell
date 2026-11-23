@@ -148,25 +148,7 @@ ShellRoot {
           anchors.horizontalCenter: parent.horizontalCenter
           anchors.verticalCenter: parent.verticalCenter
 
-          Pill {
-            icon: "󰋙"
-            onClick: {
-              hexLoader.active = true
-              hexLoader.screen = bar.screen
-            }
-            screen: bar.screen
-          }
-
           Workspaces {
-            screen: bar.screen
-          }
-
-          Pill {
-            icon: "󰋙"
-            onClick: {
-              hexLoader.active = true
-              hexLoader.screen = bar.screen
-            }
             screen: bar.screen
           }
         }
@@ -285,31 +267,5 @@ ShellRoot {
         }
       }
     }
-  }
-
-  LazyLoader {
-    id: hexLoader
-    property ShellScreen screen
-    FullscreenWindow {
-      screen: hexLoader.screen
-      onClosed: hexLoader.active = false
-
-      HexCasting {
-        anchors.fill: parent
-        onSpellCast: hexLoader.active = false
-
-        HexSpell {
-          reversible: true
-          shape: [0, 1, 2, 3, 4, 5]
-          onCast: Logger.info("cast hexagon")
-        }
-      }
-    }
-  }
-
-  GlobalShortcut {
-    name: "hexcasting"
-    description: "Start Hex Casting"
-    onPressed: hexLoader.active = true
   }
 }
